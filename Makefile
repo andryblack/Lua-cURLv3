@@ -28,10 +28,12 @@ endif
 
 ifeq ($(UNAME), Linux)
 OS_FLAGS         ?= -shared
+LIBS              = -lrt -ldl $(CURL_LIBS)
 endif
 ifeq ($(UNAME), Darwin)
 OS_FLAGS         ?= -bundle -undefined dynamic_lookup
 MAC_ENV          ?= env MACOSX_DEPLOYMENT_TARGET='10.3'
+LIBS              = -ldl $(CURL_LIBS)
 endif
 
 ifneq ($(DEBUG),)
@@ -46,7 +48,6 @@ endif
 
 INCLUDES          = -I$(LUA_INC)
 DEFINES           =
-LIBS              = -lrt -ldl $(CURL_LIBS)
 
 COMMONFLAGS       = -O2 -g -pipe -fPIC $(OS_FLAGS) $(DBG)
 LF                = $(LIBS) $(LDFLAGS)
